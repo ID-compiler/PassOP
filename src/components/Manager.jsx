@@ -17,7 +17,6 @@ const Manager = () => {
   }, []);
 
   const showpassword = () => {
-    passwordRef.current.type = "password";
     if (ref.current.src.includes("icons/hide-view.svg")) {
       ref.current.src = "icons/view-icon.svg";
       passwordRef.current.type = "text";
@@ -27,34 +26,33 @@ const Manager = () => {
     }
   };
 
+  const showToast = (msg, type = "success") => {
+    toast[type](msg, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      theme: "dark",
+    });
+  };
+
   const savePassword = () => {
-    if (!form.site.length < 3 || !form.username.length < 3 || !form.password.length < 3) {
-      toast.error("Please fill all fields with valid data!", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: "dark",
-        progress: "undefined",
-      });
-    } else {
-      const updatedArray = [...passwordArray, { ...form, id: uuidv4() }];
-      setPasswordArray(updatedArray);
-      localStorage.setItem("passwords", JSON.stringify(updatedArray));
-      setForm({ site: "", username: "", password: "" });
-      toast("Password saved!", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: "dark",
-        progress: "undefined",
-      });
+    if (
+      form.site.length < 3 ||
+      form.username.length < 3 ||
+      form.password.length < 3
+    ) {
+      showToast("Please fill all fields with valid data!", "error");
+      return;
     }
+
+    const updatedArray = [...passwordArray, { ...form, id: uuidv4() }];
+    setPasswordArray(updatedArray);
+    localStorage.setItem("passwords", JSON.stringify(updatedArray));
+    setForm({ site: "", username: "", password: "" });
+    showToast("Password saved!");
   };
 
   const editPassword = (id) => {
@@ -70,16 +68,7 @@ const Manager = () => {
     const updatedArray = passwordArray.filter((item) => item.id !== id);
     setPasswordArray(updatedArray);
     localStorage.setItem("passwords", JSON.stringify(updatedArray));
-    toast("Password deleted!", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      theme: "dark",
-      progress: "undefined",
-    });
+    showToast("Password deleted!");
   };
 
   const handleChange = (e) => {
@@ -87,33 +76,14 @@ const Manager = () => {
   };
 
   const copyText = (text) => {
-    toast("Copied to Clipboard!", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      theme: "dark",
-      progress: "undefined",
-    });
     navigator.clipboard.writeText(text);
+    showToast("Copied to Clipboard!");
   };
 
   return (
     <>
-      <ToastContainer
-        position="top-right"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        draggable
-        pauseOnHover
-        theme="light"
-        transition="Bounce"
-      />
+      <ToastContainer />
+
       <div className="overflow-scroll h-[85vh]">
         <div className="absolute inset-0 -z-10 bg-white bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]">
           <div className="absolute left-0 right-0 top-0 z-10 m-auto h-[310px] w-[310px] rounded-full bg-green-400 opacity-20 blur-[100px]"></div>
@@ -144,7 +114,7 @@ const Manager = () => {
         </div>
 
         <div className="flex items-center justify-center mt-8">
-          <label className="w-[60vw] flex lg:flex-row md:flex-col sm:flex-col md:w-[80vw]] sm:w-[80vw]] xsm:flex-col gap-4">
+          <label className="w-[60vw] flex lg:flex-row md:flex-col sm:flex-col gap-4">
             <input
               type="text"
               placeholder="Enter Username"
@@ -153,7 +123,7 @@ const Manager = () => {
               value={form.username}
               onChange={handleChange}
             />
-            <div className="relative w-full sm:w-full md:w-full lg:w-1/4">
+            <div className="relative w-full lg:w-1/4">
               <input
                 ref={passwordRef}
                 type="password"
@@ -162,13 +132,12 @@ const Manager = () => {
                 name="password"
                 value={form.password}
                 onChange={handleChange}
-                required
               />
               <img
                 ref={ref}
                 src="icons/view-icon.svg"
                 alt="View Icon"
-                className="w-5 h-5 absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer "
+                className="w-5 h-5 absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
                 onClick={showpassword}
               />
             </div>
@@ -189,38 +158,31 @@ const Manager = () => {
           </button>
         </div>
 
-        <div className="passwords flex justify-center w-full p-4">
+        <div className="passwords flex justify-center w-1/2 p-4">
           <h2 className="text-xl font-semibold mb-2 mt-2">Your Passwords</h2>
         </div>
 
         {passwordArray.length === 0 && (
-          <div className="item-passwords flex justify-center w-full">
-            No passwords to show.
-          </div>
+          <div className="item-passwords w-1/2 flex justify-center -mt-4 text-center text-gray-600">
+  No passwords to show.
+</div>
+
         )}
 
         {passwordArray.length !== 0 && (
-          <div className="overflow-x-auto overflow-y-auto w-full px-4 mx-auto w-[60vw] max-w-6xl sm:w-full md:w-[80vw] sm:w-[90vw]">
+         <div className="overflow-x-auto overflow-y-auto w-full px-4 mx-auto w-[60vw] max-w-6xl sm:w-full md:w-[80vw] sm:w-[90vw]">
             <table className="table-fixed min-w-[640px] sm:min-w-full max-w-6xl mx-auto rounded-md overflow-hidden shadow-lg">
               <thead className="bg-green-800 text-white text-center">
                 <tr className="border-b border-2 border-gray-400">
-                  <th className="w-[32%] sm:w-[32%] md:w-[28%] lg:w-[18%] border-b border-2 border-gray-400 py-2">
-                    Site
-                  </th>
-                  <th className="w-[32%] sm:w-[32%] md:w-[28%] lg:w-[18%] border-b border-2 border-gray-400 py-2">
-                    Username
-                  </th>
-                  <th className="w-[32%] sm:w-[32%] md:w-[28%] lg:w-[18%] border-b border-2 border-gray-400 py-2">
-                    Password
-                  </th>
-                  <th className="w-[20%] sm:w-[20%] md:w-[16%] lg:w-[8%] border-b border-2 border-gray-400 py-2">
-                    Actions
-                  </th>
+                  <th className="py-2">Site</th>
+                  <th className="py-2">Username</th>
+                  <th className="py-2">Password</th>
+                  <th className="py-2">Actions</th>
                 </tr>
               </thead>
               <tbody className="text-center bg-green-100">
                 {passwordArray.map((item, index) => (
-                  <tr className="border-b border-2 border-white" key={index}>
+                  <tr className="border-b border-white" key={index}>
                     <td className="py-2 break-words">
                       <a href={item.site} target="_blank" rel="noreferrer">
                         {item.site}
