@@ -1,0 +1,25 @@
+<svg
+  width="48"
+  height="48"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class="copy-icon"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+  <style>
+    .copy-icon {
+      cursor: pointer;
+      transition: transform 0.3s ease, stroke 0.3s ease;
+    }
+    .copy-icon:hover {
+      transform: rotate(-10deg) scale(1.1);
+      stroke: #4ade80; /* Tailwind green-400 */
+    }
+  </style>
+</svg>
