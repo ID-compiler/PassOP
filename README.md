@@ -1,12 +1,46 @@
-# React + Vite
+# PassOP 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**PassOP** is a sleek, minimal password manager built with **React**, **Tailwind CSS**, and **UUID**. It allows users to securely **save**, **edit**, **delete**, and **search** passwords — all stored locally in the browser using `localStorage`. No backend needed, 100% privacy-focused.
 
-Currently, two official plugins are available:
+🔗 **Live Demo**: [youpassop.netlify.app](https://youpassop.netlify.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+##  Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+-  Save and manage passwords (locally stored)
+-  Edit and update credentials inline
+-  Instantly delete entries
+-  Copy password to clipboard with one click
+-  Real-time search/filter for saved passwords
+-  Unique IDs for each entry using `uuid`
+-  Fully responsive UI with Tailwind CSS
+-  Smooth, modern animations for better UX
+
+---
+
+## Built With
+
+- [React](https://reactjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [UUID](https://www.npmjs.com/package/uuid)
+- [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
+
+---
+
+##  Disclaimer
+
+> This app stores passwords **only in your browser’s localStorage** and does **not use any encryption**. Intended for demonstration or personal lightweight usage only — not for storing sensitive or critical data.
+
+---
+
+##  Author
+
+**Ichha Dwivedi**  
+[GitHub](https://github.com/yourusername) • [LinkedIn](https://linkedin.com/in/yourlinkedin)
+
+---
+
+## 📃 License
+
+This project is licensed under the [MIT License](LICENSE).
